@@ -21,7 +21,7 @@
       margin-bottom: 5px;
     }
 
-    .mat-card:first-child {
+    .mat-card {
       margin-bottom: 20px;
     }
   }
@@ -56,6 +56,37 @@
     .mat-table {
       width: 100%;
       margin: 20px auto auto;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  #col-01 {
+    flex-grow: 1;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    .mat-card {
+      flex-basis: 48%;
+    }
+  }
+
+  #col-02 {
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 569px) {
+  #col-01 {
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mat-card {
+      flex-basis: 20%;
     }
   }
 }
