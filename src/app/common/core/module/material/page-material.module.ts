@@ -10,7 +10,8 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
@@ -25,7 +26,8 @@ import {
     MatTooltipModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule
   ]
 })
 export class PageMaterialModule { }

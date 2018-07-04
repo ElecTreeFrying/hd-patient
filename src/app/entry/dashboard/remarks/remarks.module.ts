@@ -7,6 +7,8 @@ import { RemarksMaterialModule } from '../../../common/core/module/material/rema
 import { RemarksComponent } from './remarks.component';
 import { ExpandRemarksDialogComponent } from '../../../common/shared/component/expand-remarks-dialog/expand-remarks-dialog.component';
 
+import { TimestampPipe } from '../../../common/shared/pipe/timestamp.pipe';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { ExpandRemarksDialogComponent } from '../../../common/shared/component/e
   ],
   declarations: [
     RemarksComponent,
-    ExpandRemarksDialogComponent
+    ExpandRemarksDialogComponent,
+    TimestampPipe
   ],
   entryComponents: [
     ExpandRemarksDialogComponent

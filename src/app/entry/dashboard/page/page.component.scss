@@ -4,6 +4,15 @@
   flex-flow: row wrap;
   justify-content: space-between;
 
+  #spinner {
+    width: 100%;
+    display: flex;
+
+    .mat-progress-spinner {
+      margin: auto;
+    }
+  }
+
   #col-01:nth-child(1) {
     flex-basis: calc(30% - 10px);
 

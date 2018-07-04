@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+
+import { FirestoreService } from '../../../common/core/service/firestore.service';
 
 import { ExpandRemarksDialogComponent } from '../../../common/shared/component/expand-remarks-dialog/expand-remarks-dialog.component';
 
@@ -12,13 +15,21 @@ export class RemarksComponent implements OnInit {
 
   dialogRef: MatDialogRef<ExpandRemarksDialogComponent>;
 
-  constructor(private dialog: MatDialog) { }
+  doctorsRemarks: Observable<any>;
+
+  constructor(
+    private dialog: MatDialog,
+    private firestoreService: FirestoreService
+  ) { }
 
   ngOnInit() {
+
+    this.doctorsRemarks = this.firestoreService.getDoctorsRemarks();
+
   }
 
-  expandRemarks() {
-    this.dialogRef = this.dialog.open(ExpandRemarksDialogComponent, { });
+  expandRemarks(remark: any) {
+    this.dialogRef = this.dialog.open(ExpandRemarksDialogComponent, { data: remark });
   }
 
 }

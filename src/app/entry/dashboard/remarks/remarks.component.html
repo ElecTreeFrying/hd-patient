@@ -3,10 +3,10 @@
 
     <mat-nav-list>
 
-      <mat-list-item *ngFor="let item of [0,0,0,0,0,0]">
-        <span mat-line id="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
-        <span mat-line id="time">Tue, Mar 6, 2018 1:41 PM &nbsp;&nbsp;|&nbsp;&nbsp; Dr. Lena Sims</span>
-        <button mat-icon-button (click)="expandRemarks()">
+      <mat-list-item *ngFor="let remark of doctorsRemarks | async">
+        <span mat-line id="message">{{ remark?.message }}</span>
+        <span mat-line id="time">{{ remark?.timestamp | timestamp }} &nbsp;&nbsp;|&nbsp;&nbsp; {{ remark?.to }}</span>
+        <button mat-icon-button (click)="expandRemarks(remark)">
           <mat-icon>fullscreen</mat-icon>
         </button>
       </mat-list-item>
