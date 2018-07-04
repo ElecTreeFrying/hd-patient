@@ -60,9 +60,12 @@ export class FirestoreService {
       });
   }
 
-  getDoctorsRemarks() {
-    // return this.dataDoctors.valueChanges();
-    return this.dataPatients.valueChanges();
+  getDoctorsRemarks(fullname: string) {
+    return this.dataDoctors.valueChanges().pipe(
+      map((values: any[]) => {
+        return values.filter(e => e.to === fullname);
+      })
+    );
   }
 
   getPatientReadings(patientNo: string) {

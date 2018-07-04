@@ -14,6 +14,7 @@ import { ExpandRemarksDialogComponent } from '../../../common/shared/component/e
 export class RemarksComponent implements OnInit {
 
   dialogRef: MatDialogRef<ExpandRemarksDialogComponent>;
+  isLoading: boolean = true;
 
   doctorsRemarks: Observable<any>;
 
@@ -24,7 +25,15 @@ export class RemarksComponent implements OnInit {
 
   ngOnInit() {
 
-    this.doctorsRemarks = this.firestoreService.getDoctorsRemarks();
+    this.firestoreService.getOnline().subscribe((patient) => {
+
+      if (patient === undefined) return;
+
+      this.doctorsRemarks = this.firestoreService.getDoctorsRemarks(patient.fullname);
+
+      this.doctorsRemarks.subscribe(() => (this.isLoading = false));
+
+    });
 
   }
 
