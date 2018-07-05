@@ -7,6 +7,7 @@ import { EntryMaterialModule } from '../common/core/module/material/entry-materi
 import { EntryComponent } from './entry.component';
 
 import { FirestoreService } from '../common/core/service/firestore.service';
+import { DatabaseService } from '../common/core/service/database.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { FirestoreService } from '../common/core/service/firestore.service';
     EntryComponent
   ],
   providers: [
-    FirestoreService
+    FirestoreService,
+    DatabaseService
   ]
 })
 export class EntryModule { }

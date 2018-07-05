@@ -8,8 +8,10 @@ import {
   MatSnackBarVerticalPosition
 } from '@angular/material';
 import { Chance } from 'chance';
+import * as moment from 'moment';
 
 import { FirestoreService } from './firestore.service';
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,38 +24,84 @@ export class SharedService {
 
   constructor(
     private snack: MatSnackBar,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private databaseService: DatabaseService
   ) { }
 
+  delay(amount: number) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, amount);
+    });
+  };
 
-
-
-  data() {
+  async loop() {
     const p1 = 'PX-963309195986';
     const p2 = 'PX-743002104549';
     const p3 = 'PX-318419614038';
     const p4 = 'PX-685932403453';
     const p5 = 'PX-925742140063';
     const p6 = 'PX-978055815189';
+    for (let i = 0; i < 5; i++) {
+      const a = () => {
+        let chance = new Chance();
+        const timestamp = moment().format('X');
+        let randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        let randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        let randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        let data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p1}`;
+        this.firestoreService.pushToReadings(data);
 
-    for (let i = 0; i < 120; i++) {
-      this.onPush(p1); this.onPush(p2); this.onPush(p3); this.onPush(p4); this.onPush(p5);; this.onPush(p6);
+        chance = new Chance();
+        randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p2}`;
+        this.firestoreService.pushToReadings(data);
+
+        chance = new Chance();
+        randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p3}`;
+        this.firestoreService.pushToReadings(data);
+
+        chance = new Chance();
+        randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p4}`;
+        this.firestoreService.pushToReadings(data);
+
+        chance = new Chance();
+        randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p5}`;
+        this.firestoreService.pushToReadings(data);
+
+        chance = new Chance();
+        randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
+        randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
+        data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${p6}`;
+        this.firestoreService.pushToReadings(data);
+      }
+      a();
+      await this.delay(1000);
     }
   }
 
   onPush(patientNo: string) {
     const chance = new Chance();
+    const timestamp = moment().format('X');
     const randomFloat1 = chance.floating({min: -30, max: 30, fixed: 2});
     const randomFloat2 = chance.floating({min: -30, max: 30, fixed: 2});
     const randomFloat3 = chance.floating({min: -30, max: 30, fixed: 2});
 
-    const data = `sbp/${randomFloat1} dbp/${randomFloat2} hr/${randomFloat3} patientNo/${patientNo}`;
+    const data = `sbpVal/${randomFloat1} dbpVal/${randomFloat2} hrVal/${randomFloat3} timestamp/${timestamp} patientNo/${patientNo}`;
 
     this.firestoreService.pushToReadings(data);
   }
-
-
-
 
   snackbar(message: string, duration: number = 3500): MatSnackBarRef<SimpleSnackBar> {
     const config = new MatSnackBarConfig;
@@ -101,13 +149,4 @@ export class SharedService {
     config.verticalPosition = this.vertical;
     this.snack.open(error.message, '', config);
   }
-
-  signUpError(error: any) {
-    let config = new MatSnackBarConfig();
-    config.duration = 7000;
-    config.horizontalPosition = this.horizontal;
-    config.verticalPosition = this.vertical;
-    this.snack.open(error.message, '', config);
-  }
-
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../core/service/auth.service';
 import { FirestoreService } from '../../../core/service/firestore.service';
+import { DatabaseService } from '../../../core/service/database.service';
 import { SharedService } from '../../../core/service/shared.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginDialogComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private firestoreService: FirestoreService,
+    private databaseService: DatabaseService,
     private sharedService: SharedService
   ) {
     this.form = fb.group({
@@ -59,6 +61,7 @@ export class LoginDialogComponent implements OnInit {
         this.isProgressing = true;
         this.sharedService.signInSuccess();
         this.firestoreService.enableNetwork();
+        this.databaseService.goOnline();
         this.router.navigate(['/', 'u']);
       }).catch((state) => {
         this.isProgressing = true;

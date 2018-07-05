@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { map, filter } from 'rxjs/operators'
 
 import { MessageDoctorDialogComponent } from '../../../common/shared/component/message-doctor-dialog/message-doctor-dialog.component';
 
 import { FirestoreService } from '../../../common/core/service/firestore.service';
+import { DatabaseService } from '../../../common/core/service/database.service';
 
 @Component({
   selector: 'app-page',
@@ -28,7 +28,8 @@ export class PageComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private databaseService: DatabaseService
   ) { }
 
   ngOnInit() {
@@ -36,8 +37,8 @@ export class PageComponent implements OnInit {
     this.firestoreService.getOnline().subscribe((patient) => {
 
       if (patient === undefined) return;
-      
-      this.firestoreService.getPatientReadings(patient.patientNo).subscribe((response) => {
+
+      this.databaseService.getPatientReadings(patient.patientNo).subscribe((response) => {
 
         this.readings = response[0];
         this.dataSource = new MatTableDataSource<any>(response.slice(1));
