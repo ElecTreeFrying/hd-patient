@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../core/service/auth.service';
@@ -26,15 +26,10 @@ export class LoginDialogComponent implements OnInit {
     private sharedService: SharedService
   ) {
     this.form = fb.group({
-      // 'email': [ '', [ Validators.required, Validators.email ] ],
-      // 'password': [ '', [ Validators.required, Validators.minLength(2) ] ]
-      'email': [ 'p@a.com "password is 123123"', [ Validators.required, Validators.email ] ],
-      'password': [ '', [ Validators.required, Validators.minLength(2) ] ]
+      'email': [ 'p@a.com "password is 123123"' ],
+      'password': [ '' ]
     });
   }
-
-  get emailError(): ValidationErrors { return this.form.get('email').errors; }
-  get passwordError(): ValidationErrors { return this.form.get('password').errors; }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(() => {
@@ -49,12 +44,6 @@ export class LoginDialogComponent implements OnInit {
     this.sharedService.snackbar('Processing... Please wait.', 100000000);
 
     this.isProgressing = false;
-
-    if (this.form.invalid) {
-      this.isProgressing = true;
-      this.sharedService.formError();
-      return;
-    }
 
     this.authService.signIn(form.email, form.password)
       .then(() => {
